@@ -2,6 +2,11 @@
 
 ## 2.10.1
 
+### New Features
+
+- **Amazon Transcribe Streaming**
+  - Amazon Transcribe streaming transcription enables you to send an audio stream and receive a stream of text in real time using WebSockets.
+
 ### Bug Fixes
 
 - **Amazon Polly**

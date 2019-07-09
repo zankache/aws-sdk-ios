@@ -86,6 +86,7 @@ modulelist = [
     "AWSSageMakerRuntime",
     "AWSSimpleDB",
     "AWSTranscribe",
+    "AWSTranscribeStreaming",
     "AWSTranslate",
     'AWSAutoScaling',
     'AWSAuthSDK/Sources/AWSAuthCore',

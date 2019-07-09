@@ -268,6 +268,17 @@
     XCTAssertEqualObjects(endpoint.hostName, @"transcribe.us-east-1.amazonaws.com");
     XCTAssertFalse(endpoint.useUnsafeURL);
 
+    endpoint = [[AWSEndpoint alloc] initWithRegion:AWSRegionUSEast1
+                                           service:AWSServiceTranscribeStreaming
+                                      useUnsafeURL:NO];
+    XCTAssertEqual(endpoint.regionType, AWSRegionUSEast1);
+    XCTAssertEqualObjects(endpoint.regionName, @"us-east-1");
+    XCTAssertEqual(endpoint.serviceType, AWSServiceTranscribeStreaming);
+    XCTAssertEqualObjects(endpoint.serviceName, @"transcribe");
+    XCTAssertEqualObjects(endpoint.URL, [NSURL URLWithString:@"https://transcribestreaming.us-east-1.amazonaws.com"]);
+    XCTAssertEqualObjects(endpoint.hostName, @"transcribestreaming.us-east-1.amazonaws.com");
+    XCTAssertFalse(endpoint.useUnsafeURL);
+
     endpoint = [[AWSEndpoint alloc] initWithRegion:AWSRegionAPSouth1
                                            service:AWSServiceDynamoDB
                                       useUnsafeURL:NO];
