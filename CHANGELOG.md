@@ -2,6 +2,12 @@
 
 ## 2.10.1
 
+### Bug Fixes
+- **AWSCore**
+  - Fixed a bug where credentials would be retrieved from the keychain instead of in-memory. See [#1554](https://github.com/aws-amplify/aws-sdk-ios/issues/1554).
+    Thanks @phanchutoan!
+
+### Misc. Updates
 - Model updates for the following services
   - Amazon Comprehend
 
