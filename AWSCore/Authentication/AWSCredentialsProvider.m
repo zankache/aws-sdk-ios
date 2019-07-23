@@ -409,7 +409,15 @@ static NSString *const AWSCredentialsProviderKeychainIdentityId = @"identityId";
                                                       userInfo:@{NSLocalizedDescriptionKey: @"Required role ARN is nil"}]];
     }
 
-    if (![logins objectForKey:AWSIdentityProviderAmazonCognitoIdentity]) {
+    NSString *identityProviderName = self.identityProvider.identityProviderName;
+    if (![identityProviderName isEqualToString:AWSIdentityProviderAmazonCognitoIdentity] &&
+        ![identityProviderName isEqualToString:AWSIdentityProviderAmazonCognitoIdentityCN]) {
+        return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoCredentialsProviderErrorDomain
+                                                          code:AWSCognitoCredentialsProviderInvalidConfiguration
+                                                      userInfo:@{NSLocalizedDescriptionKey: @"Invalid identity provider name"}]];
+    }
+
+    if (![logins objectForKey:identityProviderName]) {
         return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoCredentialsProviderErrorDomain
                                                           code:AWSCognitoCredentialsProviderInvalidCognitoIdentityToken
                                                       userInfo:@{NSLocalizedDescriptionKey: @"Invalid logins dictionary."}]];
@@ -417,7 +425,7 @@ static NSString *const AWSCredentialsProviderKeychainIdentityId = @"identityId";
 
     AWSSTSAssumeRoleWithWebIdentityRequest *webIdentityRequest = [AWSSTSAssumeRoleWithWebIdentityRequest new];
     webIdentityRequest.roleArn = roleArn;
-    webIdentityRequest.webIdentityToken = [logins objectForKey:AWSIdentityProviderAmazonCognitoIdentity];
+    webIdentityRequest.webIdentityToken = [logins objectForKey:identityProviderName];
     webIdentityRequest.roleSessionName = @"iOS-Provider";
     return [[self.sts assumeRoleWithWebIdentity:webIdentityRequest] continueWithBlock:^id(AWSTask *task) {
         if (task.result) {

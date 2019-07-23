@@ -29,6 +29,7 @@ FOUNDATION_EXPORT NSString *const AWSIdentityProviderLoginWithAmazon;
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderTwitter;
 
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderAmazonCognitoIdentity;
+FOUNDATION_EXPORT NSString *const AWSIdentityProviderAmazonCognitoIdentityCN;
 
 FOUNDATION_EXPORT NSString *const AWSCognitoCredentialsProviderHelperErrorDomain;
 typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderHelperErrorType) {

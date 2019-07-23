@@ -28,6 +28,7 @@ NSString *const AWSIdentityProviderLoginWithAmazon = @"www.amazon.com";
 NSString *const AWSIdentityProviderTwitter = @"api.twitter.com";
 
 NSString *const AWSIdentityProviderAmazonCognitoIdentity = @"cognito-identity.amazonaws.com";
+NSString *const AWSIdentityProviderAmazonCognitoIdentityCN = @"cognito-identity.cn-north-1.amazonaws.com.cn";
 
 @interface AWSCognitoCredentialsProvider()
 
@@ -146,7 +147,11 @@ NSString *const AWSIdentityProviderAmazonCognitoIdentity = @"cognito-identity.am
 #pragma mark - AWSIdentityProvider
 
 - (NSString *)identityProviderName {
-    return AWSIdentityProviderAmazonCognitoIdentity;
+    if (self.cognitoIdentity.configuration.regionType == AWSRegionCNNorth1) {
+        return AWSIdentityProviderAmazonCognitoIdentityCN;
+    } else {
+        return AWSIdentityProviderAmazonCognitoIdentity;
+    }
 }
 
 - (AWSTask<NSString *> *)token {
