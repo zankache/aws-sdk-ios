@@ -5,9 +5,7 @@
 #import <UIKit/UIKit.h>
 #endif
 
-#define AWSTMDiskCacheError(error) if (error) { NSLog(@"%@ (%d) ERROR: %@", \
-                                    [[NSString stringWithUTF8String:__FILE__] lastPathComponent], \
-                                    __LINE__, [error localizedDescription]); }
+#define AWSTMDiskCacheError(error) if (error) {  }
 
 static id <AWSTMCacheBackgroundTaskManager> AWSTMCacheBackgroundTaskManager;
 

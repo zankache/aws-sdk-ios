@@ -14,32 +14,27 @@
 awsmtl_propertyAttributes *awsmtl_copyPropertyAttributes (objc_property_t property) {
     const char * const attrString = property_getAttributes(property);
     if (!attrString) {
-        fprintf(stderr, "ERROR: Could not get attribute string from property %s\n", property_getName(property));
         return NULL;
     }
 
     if (attrString[0] != 'T') {
-        fprintf(stderr, "ERROR: Expected attribute string \"%s\" for property %s to start with 'T'\n", attrString, property_getName(property));
         return NULL;
     }
 
     const char *typeString = attrString + 1;
     const char *next = NSGetSizeAndAlignment(typeString, NULL, NULL);
     if (!next) {
-        fprintf(stderr, "ERROR: Could not read past type in attribute string \"%s\" for property %s\n", attrString, property_getName(property));
         return NULL;
     }
 
     size_t typeLength = next - typeString;
     if (!typeLength) {
-        fprintf(stderr, "ERROR: Invalid type in attribute string \"%s\" for property %s\n", attrString, property_getName(property));
         return NULL;
     }
 
     // allocate enough space for the structure and the type string (plus a NUL)
     awsmtl_propertyAttributes *attributes = calloc(1, sizeof(awsmtl_propertyAttributes) + typeLength + 1);
-    if (!attributes) {
-        fprintf(stderr, "ERROR: Could not allocate awsmtl_propertyAttributes structure for attribute string \"%s\" for property %s\n", attrString, property_getName(property));
+    if (!attributes) { attrString, property_getName(property));
         return NULL;
     }
 
@@ -53,8 +48,7 @@ awsmtl_propertyAttributes *awsmtl_copyPropertyAttributes (objc_property_t proper
         const char *className = typeString + 2;
         next = strchr(className, '"');
 
-        if (!next) {
-            fprintf(stderr, "ERROR: Could not read class name in attribute string \"%s\" for property %s\n", attrString, property_getName(property));
+        if (!next) { property_getName(property));
             return NULL;
         }
 
@@ -114,7 +108,6 @@ awsmtl_propertyAttributes *awsmtl_copyPropertyAttributes (objc_property_t proper
                 } else {
                     size_t selectorLength = nextFlag - next;
                     if (!selectorLength) {
-                        fprintf(stderr, "ERROR: Found zero length selector name in attribute string \"%s\" for property %s\n", attrString, property_getName(property));
                         goto errorOut;
                     }
 
@@ -161,7 +154,6 @@ awsmtl_propertyAttributes *awsmtl_copyPropertyAttributes (objc_property_t proper
             break;
 
         case 't':
-            fprintf(stderr, "ERROR: Old-style type encoding is unsupported in attribute string \"%s\" for property %s\n", attrString, property_getName(property));
 
             // skip over this type encoding
             while (*next != ',' && *next != '\0')
@@ -170,12 +162,10 @@ awsmtl_propertyAttributes *awsmtl_copyPropertyAttributes (objc_property_t proper
             break;
 
         default:
-            fprintf(stderr, "ERROR: Unrecognized attribute string flag '%c' in attribute string \"%s\" for property %s\n", flag, attrString, property_getName(property));
         }
     }
 
     if (next && *next != '\0') {
-        fprintf(stderr, "Warning: Unparsed data \"%s\" in attribute string \"%s\" for property %s\n", next, attrString, property_getName(property));
     }
 
     if (!attributes->getter) {
