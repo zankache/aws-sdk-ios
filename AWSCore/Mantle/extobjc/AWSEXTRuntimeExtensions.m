@@ -34,7 +34,7 @@ awsmtl_propertyAttributes *awsmtl_copyPropertyAttributes (objc_property_t proper
 
     // allocate enough space for the structure and the type string (plus a NUL)
     awsmtl_propertyAttributes *attributes = calloc(1, sizeof(awsmtl_propertyAttributes) + typeLength + 1);
-    if (!attributes) { attrString, property_getName(property));
+    if (!attributes) {
         return NULL;
     }
 
