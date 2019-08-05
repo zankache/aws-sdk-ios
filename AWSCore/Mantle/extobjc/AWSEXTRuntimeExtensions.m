@@ -48,7 +48,7 @@ awsmtl_propertyAttributes *awsmtl_copyPropertyAttributes (objc_property_t proper
         const char *className = typeString + 2;
         next = strchr(className, '"');
 
-        if (!next) { property_getName(property));
+        if (!next) {
             return NULL;
         }
 
@@ -162,6 +162,7 @@ awsmtl_propertyAttributes *awsmtl_copyPropertyAttributes (objc_property_t proper
             break;
 
         default:
+                break;
         }
     }
 
